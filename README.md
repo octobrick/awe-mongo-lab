@@ -1,4 +1,4 @@
-# mongo-aws-lab
+# mongo-aws-lab (This Project is Work-In-Progress)
 This lab demonstrates how to start a production-ready MongoDB cluster on AWS
 
 Desirable Features Include:
@@ -7,5 +7,7 @@ Desirable Features Include:
  - 3x configuration servers
  - TLS Encryption using Lets Encrypt
  - Proper internal and External Domain Name setups
+ - HAProxy to load balance requests to mongos instances
  
 # Project History
+- Adding Packer build script which will be used to build and orchestrate MongoDB cluster from scratch using public Ubuntu AMI
