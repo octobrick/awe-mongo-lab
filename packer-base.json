@@ -1,0 +1,42 @@
+{
+
+  "variables": {
+    "aws_access_key":     "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key":     "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "aws_region"       :  "ca-central-1",
+    "aws_instance_type":  "t2.micro",
+    "name":               "aws-control-server-base",
+    "dns_listen_addr":    "127.0.0.1"
+  },
+
+  "builders": [
+    {
+      "name":             "aws-{{user `aws_region`}}",
+      "type":             "amazon-ebs",
+      "access_key":       "{{user `aws_access_key`}}",
+      "secret_key":       "{{user `aws_secret_key`}}",
+      "region":           "{{user `aws_region`}}",
+      "instance_type":    "{{user `aws_instance_type`}}",
+      "ssh_username":     "ubuntu",
+      "ssh_timeout":      "10m",
+      "source_ami": 	  "ami-3d299b59",
+      "ami_name":         "ubuntu-16.04LTS-{{timestamp}}",
+      "ssh_private_ip":   false,
+      "associate_public_ip_address": true
+    }
+  ],
+
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30",
+      "sudo apt-add-repository -y ppa:ansible/ansible",
+      "sudo apt-get update",
+      "sudo apt-get install -y redis-server",
+      "sudo apt-get install -y haproxy",
+      "sudo apt-get install -y mg",
+      "sudo apt-get install -y ansible"
+    ]
+  }]
+
+}
